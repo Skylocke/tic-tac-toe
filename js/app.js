@@ -20,7 +20,8 @@ var message = document.getElementById("message");
 // players[0] = "o", players[1] = "x"
 // i decided that 0 should represent
 // "o" due to their similar shapes
-var players = ["o", "x"];
+var players = ["o", "x"]; // consider customizable number of players and change nextTurn() accordingly
+// nextTurn() { return numberofplayers - currentplayer; }
 var player = 1; // "x" goes first
 var moves = 0; // max moves is dim**2;
 
@@ -49,6 +50,7 @@ function resetSquares() {
 // switch between players on function call
 function nextTurn(p) {
   return 1 - p; // SWITCHES BETWEEN 0 AND 1
+  // use 1 for 2 players, 2 for three players, 3 for four players, and so on
 }
 
 function claimSq() {
@@ -75,14 +77,14 @@ function checkRow(p, elem) {
   var mark = players[p]; // easier to type and it doesn't have to be updated yet anyway
   var row = parseInt(elem.id[0]); // 0, 1, 2 => 0, 3, 6
   // start iterating from squares[row*3]
-  for (var i=0; i<dim; i++){
+  for (var i=0; i<dim; i++){ // create a row iteration function so you don't have to DRY
     // does each square from the row match
     if (squares[i + row*dim].textContent !== mark) { // it doesn't?
       return false; // welp.
     }
   }
   // if none of the marks differ from the last checked mark
-  for (var i=0; i<dim; i++){
+  for (var i=0; i<dim; i++){ // create a row iteration function so you don't have to DRY
     // does each square from the row match
     highlight(squares[i + row*dim]);
   }
@@ -103,7 +105,7 @@ function checkCol(p, elem) {
     }
   }
   // if none of the marks differ from the last checked mark
-  for (var i=0; i<dim; i++){
+  for (var i=0; i<dim; i++){ // create a col iteration function so you don't have to DRY
     highlight(squares[col + i*dim]);
   }
   return true; // it's a win!
@@ -114,7 +116,7 @@ function checkDia1(p, elem) {
   var mark = players[p];
   var id = "";
   // from (0,0) to (n,n)
-  for (var i=0; i<dim; i++) {
+  for (var i=0; i<dim; i++) { // create a dia iteration function so you don't have to DRY
     id = i.toString() + i.toString();
     sq = document.getElementById(id);
     if (sq.textContent !== mark) {
@@ -122,7 +124,7 @@ function checkDia1(p, elem) {
     }
   }
   // if none of the marks differ from the last checked mark
-  for (var i=0; i<dim; i++){
+  for (var i=0; i<dim; i++){ // create a dia iteration function so you don't have to DRY
     id = i.toString() + i.toString();
     sq = document.getElementById(id);
     highlight(sq);
@@ -135,7 +137,7 @@ function checkDia2(p, elem) {
   var mark = players[p];
   var id = "";
   // from (0,n) to (n,0)
-  for (var i=0; i<dim; i++) {
+  for (var i=0; i<dim; i++) { // create a dia iteration function so you don't have to DRY
     id = i.toString() + (dim-1-i);
     sq = document.getElementById(id);
     if (sq.textContent !== mark) {
@@ -143,7 +145,7 @@ function checkDia2(p, elem) {
     }
   }
   // if none of the marks differ from the last checked mark
-  for (var i=0; i<dim; i++){
+  for (var i=0; i<dim; i++){ // create a dia iteration function so you don't have to DRY
     id = i.toString() + (dim-1-i);
     sq = document.getElementById(id);
     highlight(sq);
